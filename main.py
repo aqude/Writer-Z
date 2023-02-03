@@ -16,7 +16,7 @@ fileCreate = 'createfile.txt'
 
 @bot.message_handler(commands=['help', 'start'])
 def send_welcome(message):
-    bot.reply_to(message, 'Заменяю з на Z')
+    bot.send_message(message, 'Заменяю з на Z')
 
 
 # @bot.message_handler(func=lambda message: True)
@@ -26,10 +26,10 @@ def send_welcome(message):
 @bot.message_handler(content_types=['text'])
 def send_welcome(message):
     if message.text == '/z':
-        msg_user = bot.send_message(message.user.id, "Пришлите текст")
+        msg_user = bot.send_message(message.from_user.id, "Пришлите текст")
         bot.register_next_step_handler(msg_user, text_filter)
     else:
-        bot.send_message(message.user.id, 'Напиши /z')
+        bot.send_message(message.from_user.id, 'Напиши /z')
 
 
 # def edit_word(message):
@@ -61,7 +61,7 @@ def text_filter(message):
     with open('createfile.txt', 'r') as f:
         w = f.read()
 
-    bot.send_message(message.user.id, w)
+    bot.send_message(message.chat.id, w)
 
     # удаляем файл
     os.remove(fileCreate)
